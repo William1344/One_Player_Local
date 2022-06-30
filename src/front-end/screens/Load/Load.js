@@ -4,8 +4,8 @@ import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Font from 'expo-font';
 import configBD from '../../../../config/config.json';
-import banco from '../../../back-end2/banco_local';
-import SalveDate from '../../../back-end2/SalveData';
+import banco_local from '../../../back-and2/banco_local';
+import SalveDate from '../../../back-and2/SalveData';
 import CompLoad from './CompLoad';
 //import styles from '../comp/Styles'
 
@@ -36,58 +36,26 @@ export default function Load(){
         }
     }
     async function checkToken(){
-        const jsBanco = await AsyncStorage.getItem("Banco");
-        if(jsBanco !== null){
-            const bd = JSON.parse(jsBanco);
-            //console.log("Banco -> \n", bd);
-            let reqs = await fetch(configBD.urlRootNode+"login_user",{
-                method: 'POST',
-                headers: {
-                    'Accept':'application/json',
-                    'Content-Type':'application/json',
-                },
-                body: JSON.stringify({
-                    email      : bd.userMaster.email,
-                    password   : bd.userMaster.password,
-                })
-            });
-            let ress = await reqs.json();
-            if(ress.status){
-                console.log("Login realizado com sucesso");
-                banco.userMaster = ress.userM;
-                banco.ligas      = ress.ligas;
-                banco.pedidos    = ress.pedidos;
-                await SalveDate(banco);
-                navigation.replace("MainP");
-                //console.log("Array com as ligas!", ress.ligs);
-            } else {
-                //console.log("Erro ao realizar login")
-                //_removeTokens();
-                console.log("Entrou aqui por que?")
-                navigation.replace("Login");
+        const jsBanco = await AsyncStorage.getItem("One_Player_Local");
+        if(jsBanco){
+            const banco = JSON.parse(jsBanco);
+            if(banco){
+                banco_local = banco;
+
+                navigation.navigate("MainP");
             }
-            /* fazer
-            // preciso verificar o login e verificar se os 
-            // dados de cada liga foram modificados dataModify?
-            // vou carregar tudo denovo, depois posso criar um 
-            // sistema mais estável para verificar a data de modify 
-            //      * preciso bolar uma estratégia com requisitos em segurança 
-            //      e verificações de chaves!*/ 
-            
         }else{
-            //console.log("User Vazio");
-            navigation.replace("Login");
+            navigation.navigate("Cadastro");
         }
-            
     };
 
     useEffect(()=>{
         fontes();
         
         setTimeout(()=>{
-            //checkToken();
-            _removeTokens();    
-            navigation.replace("Login");
+            checkToken();
+            //_removeTokens();    
+            //navigation.replace("Login");
         },1500);
         
     },[]);

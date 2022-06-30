@@ -8,7 +8,7 @@ import configDB from "../../../../config/config.json";
 import { useNavigation } from "@react-navigation/native";
 import {Cor, icons, styles} from "../../styles/index_S";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import banco from '../../../back-end2/banco_local';
+import banco from '../../../back-and2/banco_local';
 
     var tA = new Array();
     var tB = new Array();

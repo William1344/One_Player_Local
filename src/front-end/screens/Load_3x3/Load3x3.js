@@ -10,8 +10,8 @@ import {conf_Liga} from '../../styles/configsApp';
 import {Cor, styles, icons} from "../../styles/index_S";
 import configDB from "../../../../config/config.json";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import banco from '../../../back-end2/banco_local';
-import SalveData from '../../../back-end2/SalveData';
+import banco from    '../../../back-and2/banco_local';
+import SalveData from '../../../back-and2/SalveData';
 
 var tA = new Array(), tB = new Array();
 var timeA, timeB, timeS, nomeTA, nomeTB;

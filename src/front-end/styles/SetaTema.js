@@ -1,6 +1,6 @@
 import Cor from './colors';
-import banco from '../../back-end2/banco_local';
-import SalveDado from '../../back-end2/SalveData';
+import banco from '../../back-and2/banco_local';
+import SalveDado from '../../back-and2/SalveData';
 
 function SetaTema(){
   if(banco.tema){

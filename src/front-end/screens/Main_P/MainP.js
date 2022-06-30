@@ -6,8 +6,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import SalveDados from '../../../back-end2/SalveData';
-import banco from '../../../back-end2/banco_local';
+import SalveDados from '../../../back-and2/SalveData';
+import banco from '../../../back-and2/banco_local';
 import confgBD from '../../../../config/config.json';
 import { Topo} from '../../components/index_comps';
 import Icon from 'react-native-vector-icons/AntDesign';

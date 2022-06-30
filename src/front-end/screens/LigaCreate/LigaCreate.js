@@ -12,8 +12,8 @@ import { Cor, icons }   from '../../styles/index_S';
 import Topo             from '../../components/Topo/Topo';
 import confgBD          from '../../../../config/config.json';
 import assets           from '../../../../assets/index_assets';
-import banco            from '../../../back-end2/banco_local';
-import SalveData        from '../../../back-end2/SalveData';
+import banco            from '../../../back-and2/banco_local';
+import SalveData        from '../../../back-and2/SalveData';
 
 export default function LigaCreate({route}){
 

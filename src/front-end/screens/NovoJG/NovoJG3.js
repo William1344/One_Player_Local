@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import stylesNJ from './styleNJ3';
 import { useNavigation } from '@react-navigation/native';
 import { Cor, icons } from '../../styles/index_S';
-import banco from '../../../back-end2/banco_local';
+import banco from '../../../back-and2/banco_local';
 import assets from "../../../../assets/index_assets";
 import { RetornaImg } from '../../functions/index';
 

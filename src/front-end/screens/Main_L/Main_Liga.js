@@ -9,11 +9,11 @@ import { useNavigation } from "@react-navigation/native"
 import { styleM, stylesJ, stylesCJ, stylesModal } from './styleshet/index_styles';
 import { Cor, icons, styles} from '../../styles/index_S';
 import * as ImagePicker from 'expo-image-picker';
-import SalveDados from '../../../back-end2/SalveData';
+import SalveDados from '../../../back-and2/SalveData';
 import assets from "../../../../assets/index_assets";
-import banco from "../../../back-end2/banco_local";
+import banco from "../../../back-and2/banco_local";
 import configBD from "../../../../config/config.json";
-import { User_GameV } from "../../../back-end2/obj_resp/index";
+import { User_GameV } from "../../../back-and2/banco_dados/index";
 import { RetornaImg, RetornaImgL } from '../../functions/index';
 
 export default function Main_Liga({route}){

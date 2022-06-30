@@ -4,7 +4,7 @@ import { View, Text, StatusBar, BackHandler, TouchableOpacity, Alert} from "reac
 import { useNavigation } from "@react-navigation/native";
 import {conf_Liga} from '../../styles/configsApp';
 import {Cor} from "../../styles/index_S";
-import banco from "../../../back-end2/banco_local";
+import banco from "../../../back-and2/banco_local";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ViewGame_3x3({route}){

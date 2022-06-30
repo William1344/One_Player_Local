@@ -6,8 +6,8 @@ import assets from '../../../../assets/index_assets';
 import {Cor, icons, styles} from '../../styles/index_S';
 import * as ImagePicker from 'expo-image-picker';
 import {useNavigation} from '@react-navigation/native';
-import banco from '../../../back-end2/banco_local';
-import SalveData from '../../../back-end2/SalveData';
+import banco from '../../../back-and2/banco_local';
+import SalveData from '../../../back-and2/SalveData';
 import configBD from '../../../../config/config.json';
 import {RetornaImg} from '../../functions/index';
 

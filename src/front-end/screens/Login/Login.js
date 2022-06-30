@@ -8,7 +8,7 @@ import styles from './stylesL';
 import assets from '../../../../assets/index_assets';
 //import configBD from '../../../../config/config.json';
 import configBD from '../../../../config/config.json';
-import banco from '../../../back-end2/banco_local'; 
+import banco from '../../../back-and2/banco_local'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CompLoad from '../Load/CompLoad';
 

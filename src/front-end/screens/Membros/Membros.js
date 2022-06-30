@@ -7,10 +7,10 @@ import stylesMem        from './stylesMem';
 import {useNavigation}  from '@react-navigation/native';
 import {Topo}           from '../../components/index_comps';
 import AsyncStorage     from '@react-native-async-storage/async-storage';
-import banco            from '../../../back-end2/banco_local';
+import banco            from '../../../back-and2/banco_local';
 import confgBD          from '../../../../config/config.json';
 import assets           from '../../../../assets/index_assets';
-import SalveDate        from '../../../back-end2/SalveData';
+import SalveDate        from '../../../back-and2/SalveData';
 import { RetornaImg }   from '../../functions/index';
 
 export default function Membros({route}){

@@ -4,10 +4,10 @@ import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from "@react-navigation/native";
 import configsBD from '../../../../config/config.json';
 import styles from './styles_T';
-import banco from '../../../back-end2/banco_local';
+import banco from '../../../back-and2/banco_local';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import assets from '../../../../assets/index_assets';
-import SalveData from '../../../back-end2/SalveData';
+import SalveData from '../../../back-and2/SalveData';
 import {RetornaImg} from '../../functions/index';
 
 

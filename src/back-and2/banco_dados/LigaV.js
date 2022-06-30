@@ -1,22 +1,18 @@
 const DestV = require("./DestV");
+const Conf = require("./ConfgLV");
 
 module.exports = class LigaV{
-  constructor(buffer, conf){
+  constructor( buffer ){
     this.id          =   buffer.id          // id da liga
     this.local       =   buffer.local       // local da lica cidade-estado
-    this.img_log     =   buffer.img_liga    // guarda a referencia da imagem da liga.
+    this.img_log     =   0                  // guarda a referencia da imagem da liga.
     this.nome        =   buffer.nome        // nome da liga
-    this.criador     =   buffer.criador     // quem criou a liga
-    this.confLiga    =   conf               // configurações da liga
+    this.confLiga    =   new Conf()         // configurações da liga
     this.total_pts   =   0                  // total de pontos na liga 
-    this.createdAt   =   buffer.createdAt   // data em que foi criada
-    this.updatedAt   =   buffer.updatedAt   // data em que foi modificada
-    this.pedidoIsOn  =   false              // se tem pedidos ativos
-    this.pedid       =   false              // se o objeto é um pedido
+    this.createdAt   =   new Date()         // data em que foi criada
     this.pedidos     =   new Array()        // lista de pedidos da liga
     this.list_users  =   new Array()        // array de user_liga
     this.list_usersG =   new Array()        // guarda os jogadores me formato de jogo
-    this.ids_adms    =   new Array()        // array de jogadores adms da liga
     this.list_times3 =   new Array()        // array de times3x3
     this.list_times5 =   new Array()        // array de times5x5
     this.listJgsNxN  =   new Array()        // array de Jogos nxn  

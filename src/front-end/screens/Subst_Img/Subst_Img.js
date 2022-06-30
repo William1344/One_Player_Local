@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import configBD from '../../../../config/config.json';
 import {Topo} from '../../components/index_comps';
 import { useNavigation } from '@react-navigation/native';
-import banco from '../../../back-end2/banco_local';
+import banco from '../../../back-and2/banco_local';
 import style_SI from './styleSI';
 import {RetornaImg} from '../../functions/index';
 import {Cor, icons} from '../../styles/index_S';

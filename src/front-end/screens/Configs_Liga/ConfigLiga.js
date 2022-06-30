@@ -5,9 +5,9 @@ import {Text, FlatList, View, StatusBar, Image,
     } from 'react-native';
 import Icon               from "react-native-vector-icons/AntDesign";
 import { useNavigation }  from "@react-navigation/native";
-import banco              from "../../../back-end2/banco_local";
-import SalveData          from "../../../back-end2/SalveData";
-import configBD           from "../../../../config/config.json";
+import banco              from "../../../back-and2/banco_local";
+import SalveData          from "../../../back-and2/SalveData";
+
 import {styles, Cor, icons}   from "../../styles/index_S";
 import stylesCFL          from "./stylesCFL";
 import assets             from "../../../../assets/index_assets";

@@ -5,7 +5,7 @@ import { Text, View, TouchableOpacity, TextInput, Image,
 import stylesF from './stylesForm';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import banco from '../../../back-end2/banco_local';
+import banco from '../../../back-and2/banco_local';
 import assets from '../../../../assets/index_assets';
 import configsBD from '../../../../config/config.json';
 import { Picker } from '@react-native-picker/picker';

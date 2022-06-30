@@ -1,11 +1,8 @@
 const User_ScoresV = require("./User_ScoresV");
 module.exports = class User_LigaV{
-    constructor(users, lhu){
-        this.idUsers     = users.id                     // id do usuário
-        this.isUser_Liga = users.isUser_Anonimo         // se é um usuário anonimo da liga
-        this.nome        = users.nome                   // nome do jogador 
-        this.apelido     = lhu.apelido                  // apelido do jogador
-        this.isAdmin     = lhu.isAdmin                  // se é admin da liga
+    constructor(users){
+        this.id          = users.id                     // id do usuário
+        this.apelido     = users.apelido                  // apelido do jogador
         this.image       = users.image                  // image do usuário
         this.numero      = users.num_camisa             // numero da camisa do jogador
         this.posicao     = users.posicao                // posição do jogador
