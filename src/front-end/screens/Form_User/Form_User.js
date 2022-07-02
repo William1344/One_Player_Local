@@ -2,13 +2,14 @@ import React, {useState, useEffect} from 'react';
 import { Text, View, TouchableOpacity, TextInput, Image, 
   KeyboardAvoidingView, Alert, BackHandler
 } from 'react-native';
-import stylesF from './stylesForm';
-import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import banco from '../../../back-and2/banco_local';
-import assets from '../../../../assets/index_assets';
-import configsBD from '../../../../config/config.json';
-import { Picker } from '@react-native-picker/picker';
+import stylesF            from './stylesForm';
+import { useNavigation }  from '@react-navigation/native';
+import SalveData          from '../../../back-and2/SalveData';
+import banco              from '../../../back-and2/banco_local';
+import { UserV }          from '../../../back-and2/banco_dados/index';
+import assets             from '../../../../assets/index_assets';
+import configsBD          from '../../../../config/config.json';
+import { Picker }         from '@react-native-picker/picker';
 
 export default function Form_User({route}){
   const navigation = useNavigation();
@@ -37,51 +38,44 @@ export default function Form_User({route}){
           style: "cancel"
         },
         { text: "Sim", onPress: () =>  navigation.replace("Login")}
-    ]);
-    return true;
+      ]);
+      return true;
     }
     return true;
   }
 
   async function salvarInfosUser(){
-    
-    let reqs = await fetch(configsBD.urlRootNode+'salvar_infos_user',{
-      method  : 'POST',
-      headers : {
-        'Accept'        :   'application/json',
-        'Content-Type'  :   'application/json',
-      },
-      body: JSON.stringify({
-        id_user       : route.params.idUser,
-        peso          : txt_peso,
-        altura        : txt_altura,
-        envergadura   : txt_env,
-        num_camisa    : txt_numC,
-        posicao       : posicao,
-      }),
-    });
+    let us = {
+      id            : 0,
+      image         : 0,
+      nome          : route.params.player,
+      peso          : txt_peso,
+      altura        : txt_altura,
+      envergadura   : txt_env,
+      num_camisa    : txt_numC,
+      posicao       : posicao,
+    }
 
-    let res = await reqs.json();
-    if(res.status){
-      route.params.player.peso        = txt_peso;
-      route.params.player.altura      = txt_altura;
-      route.params.player.envergadura = txt_env;
-      route.params.player.num_camisa  = txt_numC;
-      route.params.player.posicao     = posicao;
-      _storeData(banco);
-      if(route.params.veio_de == "cadastro")
-        navigation.navigate("MainP");
-      else {
-        Alert.alert("Sucesso", "Dados salvos com sucesso!");
-      }
-    }
-    else{
-      console.log("Erro ao salvar infos user ->", res.dado);
-      // Alert.alert("Erro", res.dado);
-    }
+    banco.userMaster = new UserV(us);
+    await SalveData(banco);
+    navigation.replace("MainP");
   }
-  function depois(){
-    navigation.navigate("MainP");
+
+  async function depois(){
+    let us = {
+      id            : 0,
+      image         : 0,
+      nome          : route.params.player,
+      peso          : 0,
+      altura        : 0,
+      envergadura   : 0,
+      num_camisa    : 0,
+      posicao       : "Definir",
+    }
+
+    banco.userMaster = new UserV(us);
+    await SalveData(banco);
+    navigation.replace("MainP");
   }
   async function _storeData(bd){
     try {

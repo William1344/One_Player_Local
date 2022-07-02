@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SalveData = async function(banco){
+async function SalveData(banco){
   try{
       const jsonBD = JSON.stringify(banco);
       await AsyncStorage.setItem("One_Player_Local", jsonBD);

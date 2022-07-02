@@ -1,4 +1,4 @@
-module.exports = class ConfLiga{
+class ConfLiga{
   constructor(){    
     this.marc24s            = false;
     this.selSubs            = true;
@@ -10,4 +10,4 @@ module.exports = class ConfLiga{
     this.airB               = true;
     this.roubo              = false; 
   }
-};
+}; export default ConfLiga;

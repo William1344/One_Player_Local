@@ -16,7 +16,7 @@ import assets from "../../../../assets/index_assets";
 import stylesCP from '../LigaCreate/stylesCompLPesq';
 import {stylesMP, stylesC} from './styles/indexStyles';
 import { Cor, icons,  idiomaPort, idiomaEUA, SetaTema } from '../../styles/index_S';
-import {RetornaImg, RetornaImgL } from '../../functions/index';
+import {RetornaImg, RetornaImgL, SetaDests } from '../../functions/index';
 
 /*
  * Fazer: 
@@ -28,7 +28,7 @@ import {RetornaImg, RetornaImgL } from '../../functions/index';
  *  - Gerenciar confgs do app e da liga separadamente!
  * */
 export default function Main_Players(){
-    var pesq_ligas = [];
+    
     const navigation = useNavigation();
     const [rend, setRender]         = useState(false);
     const [modalV1,  setMV1]        = useState(false);
@@ -54,33 +54,11 @@ export default function Main_Players(){
         return true;
     }
 
-    async function PersisteUser(){     
-        let reqs = await fetch(confgBD.urlRootNode + "persistUser",{
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                idUser : banco.userMaster.id,
-                peds   : banco.pedidos.length,
-                ligas  : banco.ligas.length,
-                jogos  : banco.userMaster.scrT.jogos,
-            })
-        });
-        let resp = await reqs.json();
-        if(resp.status){
-            // persistir os dados recebidos
-            banco.userMaster    = resp.userM;
-            banco.pedidos       = resp.pedidos;
-            banco.ligas         = resp.ligas;
-            setRender(!rend);
-            SalveDados(banco);
-        } 
-    }
+    
 
-    useEffect(() => {
-        PersisteUser();
+    useEffect(async () => {
+        for(let lg of banco.ligas)
+            lg.destaques = await SetaDests(lg.list_users);
         //console.log("Image", banco.userMaster.image);
         //console.log("Ligas ", banco.ligas.length)
         //console.log("Liga -> \n", banco.ligas[0].confLiga);
@@ -94,9 +72,7 @@ export default function Main_Players(){
             if(banco.ligas.length == 0){
                 return (
                     <Text style = {stylesMP.textAviso}>
-                        "Para participar de partidas, você precisa 
-                        participar de uma liga, ou crie a sua liga e convide 
-                        seus amigos." 
+                        "Crie sua liga" 
                     </Text>
                 );
             } else {
@@ -151,60 +127,13 @@ export default function Main_Players(){
         );
     }
 
-    function Comp_Pedido({item}){ 
-        const dt = new Date(item.createdAt);
-        const data = "Criada: "+ dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear().toString()[2] + dt.getFullYear().toString()[3];
-        
-        
-        return(
-            <View style={stylesCP.view_compFull}>
-            <TouchableOpacity style={stylesCP.btt_comp_liga}
-                onPress = {async () => {
-                    //console.log(item);
-                    
-                }}
-            >
-                <Image style = {stylesCP.img_logo}
-                    source = {RetornaImgL(item.img_log)}
-                /> 
-                <View style = {stylesCP.viewInf}>
-                    <Text style = {stylesCP.textTitle}> - Aguardando - </Text>
-                    <Text style = {stylesCP.textInfos}> Nome: {item.nome} </Text>
-                    <Text style = {stylesCP.textInfos}> Local: {item.local} </Text>
-                    <Text style = {stylesCP.textInfos}> Membros: {item.membros}</Text>
-                    
-                </View>
-            </TouchableOpacity>
-            </View>
-        );
-    }
+
 
     function Comp_Liga({item, index}){
         const dt = new Date(item.createdAt);
         const data = "Criada: "+ dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear().toString()[2] + dt.getFullYear().toString()[3];
 
-        async function cancela_pedido(){
-            
-            let reqs = await fetch(confgBD.urlRootNode + 'cancela_pedido', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    idPedido : item.id,
-                })
-            });
-            let resp = await reqs.json();
-            if(resp.status){
-                Alert.alert("Aviso", resp.dado);
-                banco.ligas.splice(index, 1);
-                SalveDados(banco);
-                setRender(!rend);
-            }else{
-                Alert.alert("Aviso", resp.dado);
-            }
-        }
+        
         // monta o array destaques
         async function montarArrayDest(){
             let array = [];
@@ -270,21 +199,7 @@ export default function Main_Players(){
                 barStyle="ligth-content"/>
             <Topo main = {true}/>
             <View style = {stylesMP.viewLiga}>
-                <TouchableOpacity style = {stylesMP.btt_Meio}
-                    onPress = {() => {
-                        if(modo){
-                            if(banco.pedidos.length > 0){
-                                setModo(false);
-                                setTitle("Pedidos");
-                            }
-                        } else {
-                            setModo(true);
-                            setTitle("Ligas");
-                        }
-                    }}
-                >
-                    <Text style = {{...stylesMP.text_btt, fontSize: 24}}> {title} </Text>
-                </TouchableOpacity>    
+                <Text style = {stylesMP.txt_TitleM}> Ligas </Text>  
                 <View style = {stylesMP.viewL}> 
                     {render_Liga()} 
                 </View>

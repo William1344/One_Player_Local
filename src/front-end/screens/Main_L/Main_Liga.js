@@ -31,69 +31,15 @@ export default function Main_Liga({route}){
     useEffect(()=>{
         //console.log("Scores 5x5", route.params.liga.list_users[0].scr5x5);
         //console.log(route.params.liga.pedidos);
-        PersistLiga();
-        if(route.params.liga.pedidoIsOn) {
-            if(route.params.liga.pedidos.length != 0)
-                setPedido(Cor.red);
-            else {
-                setPedido(Cor.white);
-                route.params.liga.pedidoIsOn = false;
-                SalveDados(banco);
-            }
-        }
+        
         //console.log("User da liga -> ", banco.ligas[0].list_users[0]);
         BackHandler.addEventListener("hardwareBackPress", backAction);
         return () => {BackHandler.removeEventListener("hardwareBackPress", backAction);}
     }, []);
     // funcoes da tela
     function backAction(){
-        navigation.replace("MainP", {
-            liga : route.params.liga,
-        });
+        navigation.replace("MainP");
         return true;
-    }
-
-    async function isAdmin(liga){
-        for(let us of route.params.liga.list_users){
-            if(us.idUsers == banco.userMaster.id){
-                console.log("Entrou e encontrou ->", us.isAdmin);   
-                return us.isAdmin;
-            }
-        }
-        console.log("Não encontrou");
-        return false;
-    }
-
-    async function PersistLiga(){
-        let reqs = await fetch(configBD.urlRootNode + "persistLiga", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                idLiga      : route.params.liga.id,
-                users       : route.params.liga.list_users.length,
-                jogos3x3    : route.params.liga.listJgs3x3.length,
-                jogos5x5    : route.params.liga.listJgs5x5.length,
-                pedidos     : route.params.liga.pedidos.length,
-            })
-        });
-        let resp = await reqs.json();
-        if(resp.status){
-            for(let lg of banco.ligas)
-                if(lg.id == resp.liga.id){
-                    lg = resp.liga;
-                    break;
-                }
-            SalveDados(banco);
-            navigation.replace("MainL",{
-                liga        : resp.liga,
-                index_liga  : index,
-                dest        : await montarArrayDest(resp.liga),
-            });
-        }
-
     }
 
     async function add_jogadorB(apelido){
@@ -104,36 +50,20 @@ export default function Main_Liga({route}){
                 if(apels.apelido == apelido) valid = true;
                 
             if(!valid){
-                let reqs = await fetch(configBD.urlRootNode+"cadastro_user_ano", {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        idLiga   : route.params.liga.id,
-                        apelido  : apelido,
-                    }),
+                // adicionar novo jogador
+                let newUser = new User_LigaV({
+                    id          : route.params.liga.list_users.length,
+                    apelido     : apelido,
                 });
-                let resp = await reqs.json();
-                console.log("Resposta do servidor -> ",resp);
-                if(resp.status){
-                    route.params.liga.list_users.push(resp.userL);
-                    route.params.liga.list_usersG.push(resp.userG);
-                    setCod_NewUser(resp.codigo);
-                    //console.log("ID do user Anonimo", resp.codigo);
-                    //console.log("Cod_NewUser", cod_NewUser);
-                    SalveDados(banco);
-                    Alert.alert('Sucesso', 'Jogador inserido com sucesso, para resgatar os jogos, '+ 
-                    'o jogador deve realizar o cadastro pelo seu celular e utilizar o código abaixo:\n' + resp.codigo);
-                } else{
-                    //Alert.alert("Erro", "Não foi possível adicionar o jogador");
-                    console.log("Erro ao adicionar jogador -> ", resp.dado);
-                }
-            }else{
-                //Alert.alert("Erro", "Jogador já existe");
-                console.log("Jogador já existe");
-            }    
+                let newUserG = new User_GameV({
+                    id          : route.params.liga.list_users.length,
+                    apelido     : apelido,
+                    numero      : 0,
+                });
+                route.params.liga.list_users.push(newUser);
+                route.params.liga.list_usersG.push(newUserG);
+            }
+                
             
         }else {
             //Alert.alert("Seu apelido deve conter entre 3 e 15 caracteres");
@@ -150,19 +80,19 @@ export default function Main_Liga({route}){
             
             let tmA = [], tmB = [], jj = {};
             for(let jgd of jg.timeA){
-                jj = {
+                let uGV = new User_GameV({
                     id      : jgd.Users_idUsers,
                     numero  : jgd.numero,
-                }
-                let uGV = new User_GameV(jj, jgd.apelido);
+                    apelido : jgd.apelido,
+                });
                 tmA.push(uGV);
             }
             for(let jgd of jg.timeB){
-                jj = {
+                let uGV = new User_GameV({
                     id      : jgd.Users_idUsers,
                     numero  : jgd.numero,
-                }
-                let uGV = new User_GameV(jj, jgd.apelido);
+                    apelido : jgd.apelido,
+                });
                 tmB.push(uGV);
             }
             route.params.liga.list_times3.unshift(tmA);
@@ -173,19 +103,19 @@ export default function Main_Liga({route}){
         for(let jg of route.params.liga.listJgs5x5){
             let tmA = [], tmB = [], jj = {};
             for(let jgd of jg.timeA){
-                jj = {
+                let uGV = new User_GameV({
                     id      : jgd.Users_idUsers,
                     numero  : jgd.numero,
-                }
-                let uGV = new User_GameV(jj, jgd.apelido);
+                    apelido : jgd.apelido,
+                });
                 tmA.push(uGV);
             }
             for(let jgd of jg.timeB){
-                jj = {
+                let uGV = new User_GameV({
                     id      : jgd.Users_idUsers,
                     numero  : jgd.numero,
-                }
-                let uGV = new User_GameV(jj, jgd.apelido);
+                    apelido : jgd.apelido,
+                });
                 tmB.push(uGV);
             }
             route.params.liga.list_times5.push(tmA);
@@ -352,14 +282,12 @@ export default function Main_Liga({route}){
                     
                 
                 <TouchableOpacity style = {styleM.img_logo}
-                    onPress = { async () => {
-                        if(await isAdmin()){
-                            navigation.replace("Subst_ImgLg",{
-                                liga        : route.params.liga,
-                                dest        : route.params.dest,
-                                index_liga  : route.params.index_liga
-                            });
-                        }
+                    onPress = { () => {
+                        navigation.replace("Subst_ImgLg",{
+                            liga        : route.params.liga,
+                            dest        : route.params.dest,
+                            index_liga  : route.params.index_liga
+                        });
                     }}
                 >
                     <Image style = {{height:'100%', width:'100%',borderRadius: 90}}
@@ -435,13 +363,9 @@ export default function Main_Liga({route}){
                     
                     <TouchableOpacity 
                         style = {styleM.btt_opacit}
-                        onPress = {async () => {
-                            if(await isAdmin(route.params.liga)){
-                                setModalAdd(!modalAdd)
-                                setTA("");
-                            } else {
-                                Alert.alert("Você não é administrador da liga!")
-                            }
+                        onPress = {() => {
+                            setModalAdd(!modalAdd)
+                            setTA("");        
                         }} //navigation.navigate("")
                     >
                         <Icon 
@@ -454,16 +378,12 @@ export default function Main_Liga({route}){
 
                     <TouchableOpacity
                         style = {styleM.btt_opacit}
-                        onPress = {async () => {
-                            if(await isAdmin(route.params.liga)){
-                                navigation.replace("ConfigLiga",{
-                                    liga        : route.params.liga,
-                                    dest        : route.params.dest,
-                                    index_liga  : route.params.index_liga,
-                                });
-                            } else {
-                                Alert.alert("Acesso negado","Você não é administrador!");
-                            }
+                        onPress = { () => {    
+                            navigation.replace("ConfigLiga",{
+                                liga        : route.params.liga,
+                                dest        : route.params.dest,
+                                index_liga  : route.params.index_liga,
+                            });
                         }} 
                     >
                         <Icon 

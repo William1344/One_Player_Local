@@ -6,6 +6,7 @@ import * as Font from 'expo-font';
 import configBD from '../../../../config/config.json';
 import banco_local from '../../../back-and2/banco_local';
 import SalveDate from '../../../back-and2/SalveData';
+import GetData from '../../../back-and2/GetData';
 import CompLoad from './CompLoad';
 //import styles from '../comp/Styles'
 
@@ -36,22 +37,19 @@ export default function Load(){
         }
     }
     async function checkToken(){
-        const jsBanco = await AsyncStorage.getItem("One_Player_Local");
-        if(jsBanco){
-            const banco = JSON.parse(jsBanco);
-            if(banco){
-                banco_local = banco;
+        let object = await GetData();
+        if (object.status){
+            banco_local.userMaster    = object.banco.userMaster;
+            banco_local.ligas         = object.banco.ligas;
+            banco_local.usersLocal    = object.banco.usersLocal;
+            banco_local.tema          = object.banco.tema;
+            navigation.navigate('MainP');
+        } else navigation.navigate('Cadastro');
 
-                navigation.navigate("MainP");
-            }
-        }else{
-            navigation.navigate("Cadastro");
-        }
     };
 
     useEffect(()=>{
         fontes();
-        
         setTimeout(()=>{
             checkToken();
             //_removeTokens();    

@@ -1,4 +1,4 @@
-module.exports = class User_ScoresVar{
+class User_ScoresVar{
   constructor(tipo){
       this.type        = tipo  // pode ser 3x3 || 5x5 || SOMA    
       this.jogos       = 0;    // total de jogos
@@ -23,3 +23,4 @@ module.exports = class User_ScoresVar{
       this.a_RouPG     = 0;    // rouB / nº de jogos
   }
 } 
+export default User_ScoresVar;

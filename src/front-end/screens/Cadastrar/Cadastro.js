@@ -3,25 +3,27 @@ import {
     Text, View, TouchableOpacity, TextInput, Modal, Image, 
     KeyboardAvoidingView, Alert, Keyboard
 } from 'react-native';
-import stylesC from './styles_Cad';
-import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import banco from '../../../back-and2/banco_local';
-import assets from '../../../../assets/index_assets';
-import SalveData from '../../../back-and2/SalveData';
+import stylesC          from './styles_Cad';
+import {useNavigation}  from '@react-navigation/native';
+import AsyncStorage     from '@react-native-async-storage/async-storage';
+import banco            from '../../../back-and2/banco_local';
+import assets           from '../../../../assets/index_assets';
+import SalveData        from '../../../back-and2/SalveData';
 
 export default function Cadastro(){
     const navigation = useNavigation();
-    const [textName, setName] = useState("");
+    const [textName, setName] = useState("William D");
     
     useEffect(() => {
         
     },[]);
 
     
-    async function cadastraUser(nm,em,ps){
-        banco.userM
-
+    async function cadastraUser(nm){
+        navigation.replace("Form_User",{
+            player  : nm,
+            veio_de : "cadastro"
+        });
     }
     
     return(
@@ -48,7 +50,7 @@ export default function Cadastro(){
                         placeholder     = "Nome"
                     />
                     <TouchableOpacity style = {stylesC.button}
-                        onPress={() => cadastraUser(textName,textEmail,textPasword)}
+                        onPress={() => cadastraUser(textName)}
                     >
                         <Text style = {stylesC.but_text}>Cadastrar</Text>
                     </TouchableOpacity>

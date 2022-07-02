@@ -1,4 +1,4 @@
-module.exports = class DestV{
+class DestV{
   constructor(){
       this.jgd_Cluth      = {user : null, value    : 0, title: "Clutch", desc: "Decisivo nos momentos finais", rotulo : "decisivos"}; // cluth
       this.jgd_Fominha    = {user : null, value    : 0, title: "Fominha", desc: "Jogador com maior nº de jogos", rotulo : "jogos"}; // jogos
@@ -22,4 +22,4 @@ module.exports = class DestV{
       this.jgd_RouPG      = {user : null, value    : 0, title: "Média Roubos", desc: "Jogador com a maior média de roubos por jogo", rotulo : "roubos por jogo"}; // rouPG
       this.jgd_AirBPG     = {user : null, value    : 0, title: "Média Air Balls", desc: "Jogador com a maior média de air balls por jogo", rotulo : "air balls por jogo"}; // AirBPG
   }
-}
+}; export default DestV;

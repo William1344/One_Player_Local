@@ -15,6 +15,6 @@ import  User_GameV   from "./User_GameV";
 import  User_LigaV   from "./User_LigaV";
 import  User_ScoresV from "./User_ScoresV";
 
-export default {
+export {
     Conf, DestV, LigaV, UserV, User_GameV, User_LigaV, User_ScoresV
 }

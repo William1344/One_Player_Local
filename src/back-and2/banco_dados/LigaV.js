@@ -1,7 +1,7 @@
-const DestV = require("./DestV");
-const Conf = require("./ConfgLV");
+import  DestV from "./DestV";
+import  Conf  from "./ConfgLV";
 
-module.exports = class LigaV{
+class LigaV{
   constructor( buffer ){
     this.id          =   buffer.id          // id da liga
     this.local       =   buffer.local       // local da lica cidade-estado
@@ -21,3 +21,4 @@ module.exports = class LigaV{
     this.destaques   =   new DestV()        // objeto com os destaques
   }
 };
+export default LigaV;

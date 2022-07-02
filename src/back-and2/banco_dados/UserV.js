@@ -1,5 +1,5 @@
-const User_ScoresV = require("./User_ScoresV");
-module.exports = class UserV{
+import User_ScoresV from "./User_ScoresV";
+class UserV{
     constructor(user){
         this.id             = user.id;
         this.image          = user.image;
@@ -17,4 +17,4 @@ module.exports = class UserV{
         this.scr5x5         = new User_ScoresV("tipo_5");
         this.scrT           = new User_ScoresV("tipo_T");
     }
-};
+}; export default UserV;
