@@ -3,17 +3,17 @@ import {Text, FlatList, View, StatusBar, Image,
         TouchableOpacity, Modal, KeyboardAvoidingView, 
         TextInput, Alert, Keyboard, BackHandler, ActivityIndicator
     } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native"
 import { styleM, stylesJ, stylesCJ, stylesModal } from './styleshet/index_styles';
 import { Cor, icons, styles} from '../../styles/index_S';
+import { useNavigation } from "@react-navigation/native"
+import { User_GameV, User_LigaV } from "../../../back-and2/banco_dados/index";
+import Icon             from 'react-native-vector-icons/AntDesign';
+import AsyncStorage     from "@react-native-async-storage/async-storage";
 import * as ImagePicker from 'expo-image-picker';
 import SalveDados from '../../../back-and2/SalveData';
 import assets from "../../../../assets/index_assets";
 import banco from "../../../back-and2/banco_local";
 import configBD from "../../../../config/config.json";
-import { User_GameV } from "../../../back-and2/banco_dados/index";
 import { RetornaImg, RetornaImgL } from '../../functions/index';
 
 export default function Main_Liga({route}){
@@ -31,11 +31,15 @@ export default function Main_Liga({route}){
     useEffect(()=>{
         //console.log("Scores 5x5", route.params.liga.list_users[0].scr5x5);
         //console.log(route.params.liga.pedidos);
-        
+        //console.log("Image -> ", route.params.liga.img_logo);
         //console.log("User da liga -> ", banco.ligas[0].list_users[0]);
+        //console.log("Liga -> ", route.params.liga.list_users[1]);
+        //console.log("Liga -> ", route.params.liga.list_usersG[1]);
+
         BackHandler.addEventListener("hardwareBackPress", backAction);
         return () => {BackHandler.removeEventListener("hardwareBackPress", backAction);}
     }, []);
+
     // funcoes da tela
     function backAction(){
         navigation.replace("MainP");
@@ -48,7 +52,6 @@ export default function Main_Liga({route}){
             let valid = false;
             for(let apels of route.params.liga.list_users)
                 if(apels.apelido == apelido) valid = true;
-                
             if(!valid){
                 // adicionar novo jogador
                 let newUser = new User_LigaV({
@@ -62,9 +65,8 @@ export default function Main_Liga({route}){
                 });
                 route.params.liga.list_users.push(newUser);
                 route.params.liga.list_usersG.push(newUserG);
+                SalveDados(banco);
             }
-                
-            
         }else {
             //Alert.alert("Seu apelido deve conter entre 3 e 15 caracteres");
             console.log("Seu apelido deve conter entre 3 e 15 caracteres");
@@ -218,12 +220,14 @@ export default function Main_Liga({route}){
         return(
             <View style = {stylesCJ.compFull}>
             <TouchableOpacity style = {stylesCJ.btt_fl}
-                onPress = {()=>{navigation.replace("ViewP",{
-                    player  :   item,
-                    liga    :   route.params.liga,
-                    dest    :   route.params.dest,
-                    veio_de :   "MainL",
-                })}}
+                onPress = {()=>{
+                    navigation.replace("ViewP",{
+                        player  :   item,
+                        liga    :   route.params.liga,
+                        dest    :   route.params.dest,
+                        veio_de :   "MainL",
+                    });
+                }}
             >
                 <Image
                     style = {stylesCJ.img}
@@ -278,9 +282,7 @@ export default function Main_Liga({route}){
                     color = {Cor.sec}
                 />
             }
-            <View style = {styleM.viewS}>
-                    
-                
+            <View style = {styleM.viewS}>         
                 <TouchableOpacity style = {styleM.img_logo}
                     onPress = { () => {
                         navigation.replace("Subst_ImgLg",{
@@ -295,8 +297,7 @@ export default function Main_Liga({route}){
                         resizeMode = "cover"
                     />
                 </TouchableOpacity>
-                <View style={styleM.view1_infos}>
-            
+                <View style={styleM.view1_infos}>  
                     <Text style = {styleM.text}>Criada: {"" + date.getDate() + "/" + (date.getMonth()+ 1) + "/" + date.getFullYear().toString()[2]+date.getFullYear().toString()[3]}</Text>
                     <Text style = {styleM.text}>Liga: {route.params.liga.nome}</Text>
                     <Text style = {styleM.text}>Jogadores: {route.params.liga.list_users.length}</Text>
@@ -402,9 +403,7 @@ export default function Main_Liga({route}){
                         </Text>
                             {comp_destaques(dest_render)}
                     </View>
-                
                     <View style = {styleM.view_jgdrs}>
-                        
                         <TouchableOpacity style = {styleM.btt_pedidos}
                             onPress = {()=>{
                                 navigation.replace("Membros",{
@@ -415,17 +414,9 @@ export default function Main_Liga({route}){
                                 })
                             }}
                         >
-                            <Text style = {{...styles.texts, fontSize: 18, marginRight: 25}}> 
+                            <Text style = {{...styles.texts, fontSize: 24}}> 
                                 Membros  
                             </Text>
-                            
-                            <Icon
-                                name = {icons.add_jgdr}
-                                size = {30}
-                                color = {ped}
-                            />
-                
-
                         </TouchableOpacity>
                       
                         <FlatList style = {styleM.flat_List}
@@ -437,5 +428,5 @@ export default function Main_Liga({route}){
                 </View>
             </View>
         </View>
-    )
+    );
 } 

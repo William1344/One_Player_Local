@@ -12,6 +12,7 @@ import configDB from "../../../../config/config.json";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import banco from    '../../../back-and2/banco_local';
 import SalveData from '../../../back-and2/SalveData';
+import { IncremJg } from '../../functions/index';
 
 var tA = new Array(), tB = new Array();
 var timeA, timeB, timeS, nomeTA, nomeTB;
@@ -855,7 +856,6 @@ export default function Load3x3({route}){
   async function end_game(){  
     if(plcA > plcB)      for(let jgd of timeA) jgd.bool_dec = true;    
     else                 for(let jgd of timeB) jgd.bool_dec = true;
-    console.log("Aqui foi!");
     seta_A1();  seta_B1();
     seta_A2();  seta_B2();
     seta_A3();  seta_B3();
@@ -868,60 +868,28 @@ export default function Load3x3({route}){
     const rotul = "Jogo " + (route.params.liga.listJgs3x3.length + 1) + " | " + dd + " | "  + hr; 
     // criar objeto jogo para enviar ao banco de dados
     let jg = {
-        
-      Ligas_idLigas   : route.params.liga.id,
+      id              : route.params.liga.listJgs3x3.length,
       rotulo          : rotul,
       tipo_Jogo       : "3x3",
+      timeA           : timeA,
+      timeB           : timeB,
+      timeS           : timeS,
       nomeTA          : route.params.nomeA,
       nomeTB          : route.params.nomeB,
       plcA            : plcA,
       plcB            : plcB,
     };
 
-    // salvar jogo no banco de dados
-    // requisição para salvar linha jogo e receber o id do jogo!
-    let reqs = await fetch(configDB.urlRootNode+"adiciona_jogo",{
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userM   : banco.userMaster,
-        jogo    : jg,
-        timeA   : timeA,
-        timeB   : timeB,
-        timeS   : tmS,
-      })
-      //Ligas_idLigas, rotulo, tipo, nomeTA, nomeTB, plcA, plcB, dataCreate
-    });
-    let resp = await reqs.json();
-    //console.log("Resposta do servidor -> \n -> ",resp);
-    if(resp.status){
-      // o banco deve retorna o objeto liga já com o jogo computado!
-      //return res.send({status : true , userM : userMM, liga: liga, msg : "Jogo armazenado com sucesso!"});
-      banco.userMaster = resp.userM;
-      
-      let pos=null;
-      for(let lg of banco.ligas){
-        if(lg.id == resp.liga.id){
-          console.log("Encontrou liga!\n");
-          pos = banco.ligas.indexOf(lg);           
-          break;
-        }
-      }
-      if(pos != null){
-        banco.ligas[pos] = resp.liga; 
-      }
-      SalveData(banco);
-      setLoad(false);
-      navigation.replace("ViewJG3", {
-        game    : resp.game,
-        de_onde : true,
-        liga    : resp.liga
-      });
-    }
-      
+    //incrementa o jogo no perfil de cada jogador
+    
+    let jgV = await IncremJg(route.params.liga, jg);
+    SalveData(banco);
+    console.log("Jogo Var -> \n",jgV);
+    navigation.replace("ViewJG3", {
+      game    : jgV,
+      de_onde : true,
+      liga    : route.params.liga,
+    }); 
   }
 
   const Comp_FL = function({item}){

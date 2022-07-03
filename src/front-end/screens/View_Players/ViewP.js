@@ -26,13 +26,12 @@ export default function ViewP({route}){
     if(route.params.veio_de == "MainL"){
       navigation.replace("MainL",{
         liga    : route.params.liga,
-        dest    : route.params.dest,
+        dest    : route.params.dest
       });
     } else if(route.params.veio_de == "Membros"){
       navigation.replace("Membros",{
         liga    : route.params.liga,
-        dest    : route.params.dest,
-        isAdmin : route.params.isAdmin,
+        dest    : route.params.dest
       });
     } else if(route.params.veio_de == "MainP"){
       navigation.replace("MainP");

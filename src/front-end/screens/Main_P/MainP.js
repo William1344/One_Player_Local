@@ -54,8 +54,6 @@ export default function Main_Players(){
         return true;
     }
 
-    
-
     useEffect(async () => {
         for(let lg of banco.ligas)
             lg.destaques = await SetaDests(lg.list_users);
@@ -127,13 +125,10 @@ export default function Main_Players(){
         );
     }
 
-
-
     function Comp_Liga({item, index}){
         const dt = new Date(item.createdAt);
         const data = "Criada: "+ dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear().toString()[2] + dt.getFullYear().toString()[3];
 
-        
         // monta o array destaques
         async function montarArrayDest(){
             let array = [];

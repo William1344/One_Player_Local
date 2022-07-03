@@ -12,6 +12,7 @@ import style_SI from './styleSI';
 import {RetornaImg} from '../../functions/index';
 import {Cor, icons} from '../../styles/index_S';
 import assets from '../../../../assets/index_assets';
+import SalveDados from '../../../back-and2/SalveData';
 
 export default function Subst_ImgLg({route}){
   const navigation = useNavigation();
@@ -34,25 +35,13 @@ export default function Subst_ImgLg({route}){
   async function setar_Img(value){ // value é o valor referente ao icon
    
     if(route.params.liga.img_log != value){
-      let reqs = await fetch(configBD.urlRootNode + 'salvar_img_liga',{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          idLiga  : route.params.liga.id,
-          val     : value
-        })
+      route.params.liga.img_logo = value;
+      await SalveDados(banco);
+      navigation.replace("MainL",{
+        liga        : route.params.liga,
+        dest        : route.params.dest,
+        index_liga  : route.params.index_liga,
       });
-      let resp = await reqs.json();
-      if(resp.status){
-        route.params.liga.img_log = value;
-        Alert.alert('Sucesso!', resp.msg);
-        setState(!state);
-      } else {
-        Alert.alert('Erro!', 'Erro ao alterar imagem!');
-      }
     }
   }
 

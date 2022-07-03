@@ -60,7 +60,8 @@ export default function Subst_Img(){
           <View style = {style_SI.linha}>
             <TouchableOpacity style = {{...style_SI.btt_img, justifyContent: 'center', alignItems: 'center'}}
               onPress = {() => {
-                Alert.alert("Disponivel em breve!");
+                //adicionar camera ou galeria?
+                
               }}
             >
               <Icon
