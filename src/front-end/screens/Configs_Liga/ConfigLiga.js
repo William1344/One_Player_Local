@@ -48,8 +48,9 @@ export default function ConfigLiga({route}){
 
   function backAction(){
     navigation.replace("MainL",{
-      liga    : route.params.liga,
-      dest    : route.params.dest,  
+      liga        : route.params.liga,
+      dest        : route.params.dest,  
+      index_liga  : route.params.index_liga,
     });
     return true;
   }
@@ -256,54 +257,22 @@ export default function ConfigLiga({route}){
     confs.roubo       = roubo;
     // salvar as novas configurações no banco de dados
     if(alterado){
-      console.log("ENTROU -> confis", confs);
-      let reqs = await fetch(configBD.urlRootNode+"salvar_conf_liga", {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          idLiga : route.params.liga.id,
-          config : confs,
-        }),
+      //console.log("ENTROU -> confis", confs);
+      route.params.liga.confLiga = confs;
+      SalveData(banco);
+      navigation.replace("MainL",{
+        liga        : route.params.liga,
+        dest        : route.params.dest,  
+        index_liga  : route.params.index_liga
       });
-      let ress = await reqs.json();
-      if(ress.status){
-        // salvar nova conf da liga e salvar no banco local
-        Alert.alert("Sucesso", "Configurações salvas com sucesso!");
-        //console.log("Salvou suas configurações");
-        SalveData(banco);
-        setAlterado(false);
-      } else {
-        Alert.alert("Erro", "Não foi possível salvar as configurações");
-        console.log("Erro", ress.msg);
-      }
     }
   }
 
   async function deletarLiga(){
-
-    let reqs = await fetch(configBD.urlRootNode+"deletar_liga", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        idLiga : route.params.liga.id,
-      }),
-    });
-    let ress = await reqs.json();
-    if(ress.status){
-      // deletar liga e salvar no banco local
-      Alert.alert("Sucesso", "Liga deletada com sucesso!");
-      SalveData(banco);
-      navigation.navigate("MainP");
-    } else {
-
-    }
-
+    banco.ligas.splice(route.params.index_liga, 1);
+    SalveData(banco);
+    Alert.alert("Liga deletada com sucesso!");
+    navigation.replace("MainP");
   }
 
   return(

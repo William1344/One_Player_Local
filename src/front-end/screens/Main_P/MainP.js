@@ -18,15 +18,7 @@ import {stylesMP, stylesC} from './styles/indexStyles';
 import { Cor, icons,  idiomaPort, idiomaEUA, SetaTema } from '../../styles/index_S';
 import {RetornaImg, RetornaImgL, SetaDests } from '../../functions/index';
 
-/*
- * Fazer: 
- *  - Sistema entre amigos
- *  - Convidar e aceitar convites de amigos
- *  - Realizar x1 entre amigos
- *  - Perfil de Usuarios
- *  - Gerenciar convites na liga
- *  - Gerenciar confgs do app e da liga separadamente!
- * */
+
 export default function Main_Players(){
     
     const navigation = useNavigation();
@@ -174,7 +166,7 @@ export default function Main_Players(){
                     }
                 >
                     <Image style = {stylesC.img_logo}
-                        source = {RetornaImgL(item.img_log)}
+                        source = {RetornaImgL(item.img_logo)}
                     /> 
                     <View style = {stylesC.viewInf}>
                         <Text style = {stylesC.textTitle}> {item.nome}</Text>

@@ -11,6 +11,7 @@ import banco from '../../../back-and2/banco_local';
 import style_SI from './styleSI';
 import {RetornaImg} from '../../functions/index';
 import {Cor, icons} from '../../styles/index_S';
+import SalveData from '../../../back-and2/SalveData';
 import assets from '../../../../assets/index_assets';
 
 export default function Subst_Img(){
@@ -30,26 +31,12 @@ export default function Subst_Img(){
   async function setar_Img(value){ // value é o valor referente ao icon
     
     if(banco.userMaster.image != value){
-      let reqs = await fetch(configBD.urlRootNode + 'salvar_img_user',{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          idUser  : banco.userMaster.id,
-          val     : value
-        })
-      });
-      let resp = await reqs.json();
-      if(resp.status){
-        banco.userMaster.image = value;
-        Alert.alert('Sucesso!', resp.msg);
-        setState(!state);
-      } else {
-        Alert.alert('Erro!', 'Erro ao alterar imagem!');
-      }
-    }
+      banco.userMaster.image = value;
+      SalveData(banco);
+      navigation.replace("MainP");
+    } 
+    else Alert.alert("Aviso", "Essa é sua atual imagem!");
+    
   }
 
   function render_grande(){

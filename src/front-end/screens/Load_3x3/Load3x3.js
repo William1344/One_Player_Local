@@ -883,6 +883,7 @@ export default function Load3x3({route}){
     //incrementa o jogo no perfil de cada jogador
     
     let jgV = await IncremJg(route.params.liga, jg);
+    route.params.liga.listJgs3x3.push(jgV);
     SalveData(banco);
     console.log("Jogo Var -> \n",jgV);
     navigation.replace("ViewJG3", {

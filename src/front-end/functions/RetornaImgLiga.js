@@ -1,6 +1,6 @@
 import assets from '../../../assets/index_assets';
 
-export default function RetornaImg(value){
+export default function RetornaImgL(value){
        if(value == 0)  return assets.liga_lg;
   else if(value == 1)  return assets.liga_lg1;
   else if(value == 2)  return assets.liga_lg2;
@@ -14,5 +14,4 @@ export default function RetornaImg(value){
   else if(value == 10) return assets.liga_lg10;
   else if(value == 11) return assets.liga_lg11;
   else                 return assets.liga_lg12;
-
-}
+};

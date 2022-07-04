@@ -15,8 +15,9 @@ const stylesCJ = StyleSheet.create({
         alignItems: 'center',
         height: 80,
         width: '98%',
+        backgroundColor: Cor.ter,
         ...styles.borderRad,
-
+        borderColor: null,
     },
         img:{
             height: "80%",

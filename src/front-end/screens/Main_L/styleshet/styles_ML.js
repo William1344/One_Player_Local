@@ -98,7 +98,9 @@ const Styles_ML = StyleSheet.create({
                     alignItems: 'center',
                     width: '95%',
                     height: '81%',
+                    backgroundColor: Cor.ter,
                     ...styles.borderRad,
+                    borderColor: null,
                     
                 },
                     view1CompDest:{

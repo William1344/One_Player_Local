@@ -77,14 +77,7 @@ export default function Form_User({route}){
     await SalveData(banco);
     navigation.replace("MainP");
   }
-  async function _storeData(bd){
-    try {
-        const jsonBD = JSON.stringify(bd);
-        await AsyncStorage.setItem("Banco", jsonBD);
-    } catch (e) {
-        console.log("Erro ao salvar banco")
-    }
-}
+ 
   return(
     <View style={stylesF.telaFull}>
       <TouchableOpacity style = {stylesF.btt_img} 

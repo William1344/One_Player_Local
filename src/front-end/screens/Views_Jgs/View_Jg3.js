@@ -33,8 +33,7 @@ export default function ViewGame_3x3({route}){
                 dest    :   route.params.dest,
             });
         }
-        
-          return true;
+        return true;
     }
 
     useEffect(() => {
@@ -42,15 +41,6 @@ export default function ViewGame_3x3({route}){
         return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
     },[]);
     
-    async function _saveData(bd){
-        try {
-            const jsonValue = JSON.stringify(bd);
-            await AsyncStorage.setItem("Banco", jsonValue);
-        } catch (e) {
-            console.log("Erro ao salvar dados no dispositivo!");
-        }
-    }
-
     async function montarArrayDest(){
         let array = [];
         array.push(route.params.liga.destaques.jgd_Cluth);

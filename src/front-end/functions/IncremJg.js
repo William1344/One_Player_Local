@@ -5,6 +5,7 @@ import SalveData from '../../back-and2/SalveData';
 export default async function IncremJg(liga, game) {
   
   async function AddGameUser(jgd, user, tipoJG){
+
     if(tipoJG == "3x3"){   
       user.scr3x3.jogos = user.scr3x3.jogos + 1;        
       if(jgd.bool_dec)    user.scr3x3.vit = user.scr3x3.vit + 1;
@@ -85,18 +86,28 @@ export default async function IncremJg(liga, game) {
 
   let jogo = new JogoV(game);
  
-  console.log("Aqui entrou antes");
-  if(game.timeS.length > 0) 
-    for(let jgd of game.timeS)
-      if(jgd.bool_jogou){
+  //console.log("Aqui entrou antes");
+  // verifica se tem jogadores subst e se os substitutos entraram em quadra.
+  // caso, sim adiciona na lista de subs permanente e incrementa o jogo no usuário
+  if(game.timeS.length > 0){ 
+    for(let jgd of game.timeS){
+      if(jgd.Users_idUsers == 0) //incrementa user marter
+        AddGameUser(jgd, banco_local.userMaster, game.tipo_Jogo);
+      if(jgd.bool_jogou){ 
         jogo.timeS.push(jgd);
         AddGameUser(jgd, liga.list_users[jgd.Users_idUsers], game.tipo_Jogo);
       }
+    }  
+  }
   for(let jgd of game.timeA) {
+    if(jgd.Users_idUsers == 0) //incrementa user marter
+        AddGameUser(jgd, banco_local.userMaster, game.tipo_Jogo);
     jogo.timeA.push(jgd);
     AddGameUser(jgd, liga.list_users[jgd.Users_idUsers], game.tipo_Jogo);
   }
   for(let jgd of game.timeB){ 
+    if(jgd.Users_idUsers == 0) //incrementa user marter
+        AddGameUser(jgd, banco_local.userMaster, game.tipo_Jogo);
     jogo.timeB.push(jgd);
     AddGameUser(jgd, liga.list_users[jgd.Users_idUsers], game.tipo_Jogo);
   }

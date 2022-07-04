@@ -42,7 +42,7 @@ export default function Subst_ImgLg({route}){
         dest        : route.params.dest,
         index_liga  : route.params.index_liga,
       });
-    }
+    } else Alert.alert("Aviso", "Essa é sua atual imagem!");
   }
 
   function render_grande(){

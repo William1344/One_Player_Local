@@ -205,7 +205,7 @@ export default function Main_Liga({route}){
                             </TouchableOpacity>
                             </KeyboardAvoidingView>
                             <View style = {stylesModal.viewInfor}>
-                                <Text style = {stylesModal.text_btt}> Adicionar apenas os jogadores sem cadastro no aplicativo</Text>
+                                <Text style = {stylesModal.text_btt}> Você pode remove-los na área de membros.</Text>
                             </View>    
                         </View>
                     </View>
@@ -293,7 +293,7 @@ export default function Main_Liga({route}){
                     }}
                 >
                     <Image style = {{height:'100%', width:'100%',borderRadius: 90}}
-                        source = { RetornaImgL(route.params.liga.img_log) }
+                        source = {RetornaImgL(route.params.liga.img_logo)}
                         resizeMode = "cover"
                     />
                 </TouchableOpacity>
@@ -410,8 +410,7 @@ export default function Main_Liga({route}){
                                     liga        : route.params.liga,
                                     dest        : route.params.dest,
                                     index_liga  : route.params.index_liga,
-                                    isAdmin     : isAdmin(),
-                                })
+                                });
                             }}
                         >
                             <Text style = {{...styles.texts, fontSize: 24}}> 
